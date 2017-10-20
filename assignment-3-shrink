@@ -63,8 +63,8 @@ function processDrop(drop) {
   drop.y += 5;
 	drop.w-=0.5;
 	drop.h-=0.5;
-  stroke(0);
-  fill(255, drop.opacity);
+	drop.opacity-=6;
+  fill(drop.shade, drop.opacity);
   ellipse(drop.x, drop.y, drop.w,drop.h);
 }
 
