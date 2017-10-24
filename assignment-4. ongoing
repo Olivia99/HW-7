@@ -1,3 +1,4 @@
+var stars = [];
 var keys = {
   17: 0, // G    - control
   Q: 1, // Ab
@@ -32,7 +33,7 @@ function setup() {
   createCanvas(400, 400);
   backgroundColor = color(255, 0, 255);
   textAlign(CENTER);
-  
+  frameRate(19);
   for (var i = 0; i < frequencies.length; i++) {
     var osc = new p5.Oscillator();
     osc.setType('triangle');
@@ -55,17 +56,22 @@ function draw() {
     }
     ellipse((i+0.5) * width/playing.length, height/4, width/playing.length*2.6,width/playing.length*2.6 );
   }
+	 
   drops.forEach(processDrop);
   drops = drops.filter(isVisible);
+	
 }
 
 function processDrop(drop) {
-  drop.y += 5;
+	drop.y += 15;
+	drop.k+=random(8/3,8/7);
+	drop.b-=2
 	// drop.w-=0.5;
 	// drop.h-=0.5;
-	drop.opacity-=6;
-  fill(255,255,0, drop.opacity);
+	// drop.opacity-=6;
+	// fill(255,255,0, drop.opacity);
   drop.drawPattern();
+
 }
 
 function isVisible(drop) {
@@ -96,26 +102,29 @@ function keyReleased() {
     
     drops.push({
       shade: frequencies[index]/18,
+      r: 50*cos(this.k*this.a),
       x: (index+0.3) * width/playing.length,
-      r: 20*cos(this.k*this.a),
-			y: this.r*sin(this.a),
-			// w: width/playing.length*1.5,
-			// h: width/playing.length*1.5,
+      y: height/4,
       opacity: 255,
-			k: 8/5,
-			a:0,
-		  drawPattern: function(){
-			translate((index+0.3) * width/playing.length,height/4);
-			beginShape();
-			stroke(255);
-			fill(255,255,0);
-			strokeWeight(1);
-			for(var a=0; a<TWO_PI*20; a+=0.02){
-				vertex(this.x,this.y);
-				
-			}
-			endShape(CLOSE);
-			},
-    });
+			k: 1,
+			b:45,
+		  drawPattern: function(){ 
+				beginShape();
+				stroke(random(30,200),205,random(30,90));
+				noFill();
+				strokeWeight(0.2);
+				translate(this.x,this.y);
+				for(var a=0; a<TWO_PI*8; a+=0.02){
+				var r=this.b*cos(this.k*a);
+				var x=r*cos(a);
+				var y=r*sin(a);
+
+				vertex(x,y);
+
+				}
+
+				endShape(CLOSE);
+				}
+					});
   }
 }
