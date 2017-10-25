@@ -109,6 +109,7 @@ function keyReleased() {
 			k: 1,
 			b:45,
 		  drawPattern: function(){ 
+			push();
 				beginShape();
 				stroke(random(30,200),205,random(30,90));
 				noFill();
@@ -124,7 +125,9 @@ function keyReleased() {
 				}
 
 				endShape(CLOSE);
+			pop();
 				}
+
 					});
   }
 }
